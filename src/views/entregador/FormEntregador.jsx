@@ -30,15 +30,18 @@ class FormEntregador extends React.Component{
 									/>
 
 									<Form.Input
+										required
 										fluid
-										label='CPF'>
+										label='CPF'
+										width={6}>
 										<InputMask 
 										mask="999.999.999-99"/> 
 									</Form.Input>
 
                                     <Form.Input
 										fluid
-										label='RG'>
+										label='RG'
+										width={6}>
 										<InputMask 
 										mask="99.999.999"/> 
 									</Form.Input>
@@ -95,6 +98,29 @@ class FormEntregador extends React.Component{
                                    
 								</Form.Group>
 
+								<Form.Group widths='equal'>
+
+									<Form.Input
+										fluid
+										label='Rua'
+										width={100}
+										maxLength="100"
+
+									/>
+
+									<Form.Input
+										required
+										fluid
+										label='Número'
+										width={6}>
+										<InputMask 
+										mask="(99) 9999.9999"/> 
+									</Form.Input>
+
+
+
+								</Form.Group>
+
                                 <Form.Group widths='equal'>
 
 									<Form.Input
@@ -111,7 +137,8 @@ class FormEntregador extends React.Component{
 
                                     <Form.Input
 										fluid
-										label='CPF'>
+										label='CPF'
+										width={6}>
 										<InputMask 
 										mask="999.999.999-99"/> 
 									</Form.Input>
@@ -129,13 +156,16 @@ class FormEntregador extends React.Component{
 
                                 <Form.Group widths='equal'>
 
-                                <Form.Input
+								
+                                <Form.Select
 										fluid
 										label='UF'
                                         placeholder="Selecione"
                                         InputMessage
 										maxLength="100"
-									/>   
+									/>
+									
+
                                 </Form.Group>
 
                                 <Form.Group widths='equal'>
@@ -146,6 +176,30 @@ class FormEntregador extends React.Component{
 										maxLength="100"
 									/>   
                                 </Form.Group>
+
+								<Form.Group widths='justify'>
+
+								<Form.Field
+										fluid
+										label='Ativa:'
+										maxLength="100"
+									/>   
+
+								<Form.Radio
+										fluid
+										label='Sim'
+										maxLength="5"
+									/>   
+
+								<Form.Radio
+										fluid
+										label='Não'
+										tabindex="0"
+									/>   
+									
+								</Form.Group>
+								
+                               
 
 								<Form.Group widths='equal' style={{marginTop: '4%'}}  className='form--empresa-salvar'>
 

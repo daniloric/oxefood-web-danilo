@@ -42,11 +42,10 @@ class FormProduto extends React.Component{
 
 								</Form.Group>
 								
-                                <Form.Input
+                                <Form.TextArea
 										fluid
-										label='Descriçaõ'
-                                        placeholder="Informe a descrição do produto"
-                                        textarea= "tet"
+										label='Descrição'
+                                        textarea placeholder="Informe a descrição do produto" 
 										maxLength="default"
 									/>
 
