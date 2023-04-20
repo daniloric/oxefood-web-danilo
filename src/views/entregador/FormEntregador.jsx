@@ -4,6 +4,48 @@ import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 
 class FormEntregador extends React.Component{
 
+	state = {
+		nome: null,
+		cpf: null,
+		rg: null,
+		dTNascimento: null,
+		foneCelular: null,
+		foneFixo: null,
+		QTDentregasRealizadas: null,
+		valorPorFrete: null,
+		numero: null,
+		bairro: null,
+		cidade: null,
+		cpf: null,
+		uf: null,
+		uf: null,
+		complemente: null,
+		ativa: null,
+		sim: null,
+		nao: null,
+	}
+
+	salvar = () => {
+
+	let clienteRequest = {
+
+		nome: this.state.nome,
+		cpf: this.state.cpf,
+		dataNascimento: this.state.dataNascimento,
+		foneCelular: this.state.foneCelular,
+		foneFixo: this.state.foneFixo
+	}
+
+	axios.post("http://localhost:8082/api/cliente", clienteRequest)
+	.then((response) => {
+		console.log('Cliente cadastrado com sucesso.')
+	})
+	.catch((error) => {
+		console.log('Erro ao incluir o um cliente.')
+	})
+}
+
+
     render(){
         return(
             <div>
@@ -27,6 +69,8 @@ class FormEntregador extends React.Component{
 										fluid
 										label='Nome'
 										maxLength="100"
+										value={this.state.nome}
+										onChange={e => this.setState({nome: e.target.value})}
 									/>
 
 									<Form.Input
@@ -35,7 +79,10 @@ class FormEntregador extends React.Component{
 										label='CPF'
 										width={6}>
 										<InputMask 
-										mask="999.999.999-99"/> 
+										mask="999.999.999-99"
+										value={this.state.cpf}
+										onChange={e => this.setState({cpf: e.target.value})} 
+				/> 
 									</Form.Input>
 
                                     <Form.Input
@@ -43,7 +90,10 @@ class FormEntregador extends React.Component{
 										label='RG'
 										width={6}>
 										<InputMask 
-										mask="99.999.999"/> 
+										mask="99.999.999"
+										value={this.state.rg}
+										onChange={e => this.setState({rg: e.target.value})} 
+				/> 
 									</Form.Input>
 
 
@@ -60,6 +110,8 @@ class FormEntregador extends React.Component{
                                             mask="99/99/9999" 
                                             maskChar={null}
                                             placeholder="Ex: 20/03/1985"
+											value={this.state.dTNascimento}
+											onChange={e => this.setState({dTNascimento: e.target.value})}
                                         /> 
                                     </Form.Input>
 
@@ -69,7 +121,10 @@ class FormEntregador extends React.Component{
 										label='Fone Celular'
                                         width={6}>
 										<InputMask 
-										mask="(99) 9999.9999" /> 
+										mask="(99) 9999.9999" 
+										value={this.state.foneCelular}
+										onChange={e => this.setState({foneCelular: e.target.value})}
+										/> 
 									</Form.Input>
 
 									<Form.Input
@@ -77,7 +132,10 @@ class FormEntregador extends React.Component{
 										label='Fone Fixo'
                                         width={6}>
 										<InputMask 
-										mask="(99) 9999.9999" /> 
+										mask="(99) 9999.9999" 
+										value={this.state.foneFixo}
+										onChange={e => this.setState({foneFixo: e.target.value})}
+										/> 
 									</Form.Input>
 
                                     <Form.Input
@@ -85,7 +143,10 @@ class FormEntregador extends React.Component{
 										label='QTD Entregas Realizadas'
                                         width={6}>
 										<InputMask 
-										mask="999"/> 
+										mask="999"
+										value={this.state.QTDentregasRealizadas}
+										onChange={e => this.setState({QTDentregasRealizadas: e.target.value})}
+										/> 
 									</Form.Input>
 
                                     <Form.Input
@@ -93,7 +154,10 @@ class FormEntregador extends React.Component{
 										label='Valor Por Frete'
                                         width={6}>
 										<InputMask 
-										mask="99,99$"/> 
+										mask="99,99$"
+										value={this.state.valorPorFrete}
+										onChange={e => this.setState({valorPorFrete: e.target.value})}
+										/> 
 									</Form.Input>
                                    
 								</Form.Group>
@@ -105,7 +169,8 @@ class FormEntregador extends React.Component{
 										label='Rua'
 										width={100}
 										maxLength="100"
-
+										value={this.state.rua}
+										onChange={e => this.setState({rua: e.target.value})}
 									/>
 
 									<Form.Input
@@ -114,7 +179,10 @@ class FormEntregador extends React.Component{
 										label='Número'
 										width={6}>
 										<InputMask 
-										mask="(99) 9999.9999"/> 
+										mask="(99) 9999.9999"
+										value={this.state.numero}
+										onChange={e => this.setState({numero: e.target.value})}
+										/> 
 									</Form.Input>
 
 
@@ -127,12 +195,16 @@ class FormEntregador extends React.Component{
 										fluid
 										label='Bairro'
 										maxLength="100"
+										value={this.state.bairro}
+										onChange={e => this.setState({bairro: e.target.value})}
 									/>
 
                                     <Form.Input
 										fluid
 										label='Cidade'
 										maxLength="100"
+										value={this.state.cidade}
+										onChange={e => this.setState({cidade: e.target.value})}
 									/>
 
                                     <Form.Input
@@ -140,7 +212,10 @@ class FormEntregador extends React.Component{
 										label='CPF'
 										width={6}>
 										<InputMask 
-										mask="999.999.999-99"/> 
+										mask="999.999.999-99"
+										value={this.state.cpf}
+										onChange={e => this.setState({cpf: e.target.value})}
+										/> 
 									</Form.Input>
 
                                 </Form.Group>
@@ -151,6 +226,8 @@ class FormEntregador extends React.Component{
 										fluid
 										label='UF'
 										maxLength="100"
+										value={this.state.uf}
+										onChange={e => this.setState({uf: e.target.value})}
 									/>   
                                 </Form.Group>
 
@@ -163,6 +240,8 @@ class FormEntregador extends React.Component{
                                         placeholder="Selecione"
                                         InputMessage
 										maxLength="100"
+										value={this.state.uf}
+										onChange={e => this.setState({uf: e.target.value})}
 									/>
 									
 
@@ -174,6 +253,8 @@ class FormEntregador extends React.Component{
 										fluid
 										label='Complemente'
 										maxLength="100"
+										value={this.state.complemente}
+										onChange={e => this.setState({complemente: e.target.value})}
 									/>   
                                 </Form.Group>
 
@@ -183,18 +264,24 @@ class FormEntregador extends React.Component{
 										fluid
 										label='Ativa:'
 										maxLength="100"
+										value={this.state.ativa}
+										onChange={e => this.setState({ativa: e.target.value})}
 									/>   
 
 								<Form.Radio
 										fluid
 										label='Sim'
 										maxLength="5"
+										value={this.state.sim}
+										onChange={e => this.setState({sim: e.target.value})}
 									/>   
 
 								<Form.Radio
 										fluid
 										label='Não'
 										tabindex="0"
+										value={this.state.nao}
+										onChange={e => this.setState({nao: e.target.value})}
 									/>   
 									
 								</Form.Group>
