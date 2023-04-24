@@ -27,21 +27,35 @@ class FormEntregador extends React.Component{
 
 	salvar = () => {
 
-	let clienteRequest = {
+	let entregadoreRequest = {
 
 		nome: this.state.nome,
 		cpf: this.state.cpf,
-		dataNascimento: this.state.dataNascimento,
+		rg: this.state.rg,
+		dTNascimento: this.state.dTNascimento,
 		foneCelular: this.state.foneCelular,
-		foneFixo: this.state.foneFixo
+		foneFixo: this.state.foneFixo,
+		QTDentregasRealizadas: this.state.v,
+		valorPorFrete: this.state.valorPorFrete,
+		numero: this.state.numero,
+		bairro: this.state.bairro,
+		cidade: this.state.cidade,
+		cpf: this.state.cpf,
+		uf: this.state.uf,
+		uf: this.state.uf,
+		complemente: this.state.complemente,
+		ativa: this.state.ativa,
+		sim: this.state.sim,
+		nao: this.state.nao,
+
 	}
 
-	axios.post("http://localhost:8082/api/cliente", clienteRequest)
+	axios.post("http://localhost:8082/api/entregador", entregadorRequest)
 	.then((response) => {
-		console.log('Cliente cadastrado com sucesso.')
+		console.log('Entregador cadastrado com sucesso.')
 	})
 	.catch((error) => {
-		console.log('Erro ao incluir o um cliente.')
+		console.log('Erro ao incluir o um Entregador.')
 	})
 }
 

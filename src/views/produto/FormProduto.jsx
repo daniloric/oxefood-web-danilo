@@ -4,6 +4,35 @@ import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 
 class FormProduto extends React.Component{
 
+	state = {
+		titulo: null,
+		descrição: null,
+		ValorUnitario: null,
+		foneCelular: null,
+		foneFixo: null
+	}
+
+	salvar = () => {
+
+	let clienteRequest = {
+
+		nome: this.state.nome,
+		cpf: this.state.cpf,
+		dataNascimento: this.state.dataNascimento,
+		foneCelular: this.state.foneCelular,
+		foneFixo: this.state.foneFixo
+	}
+
+	axios.post("http://localhost:8082/api/cliente", clienteRequest)
+	.then((response) => {
+		console.log('Cliente cadastrado com sucesso.')
+	})
+	.catch((error) => {
+		console.log('Erro ao incluir o um cliente.')
+	})
+}
+
+
     render(){
         return(
             <div>
