@@ -20,7 +20,7 @@ class Home extends React.Component{
 
                                     Para acessar o código da <strong>API</strong> do sistema, acesse: <a href='https://github.com/robertoalencar/oxefood-api' target='_blank'> https://github.com/robertoalencar/oxefood-api </a> <br/> <br/>
                                     Para acessar o código do <strong>Módulo WEB</strong>, acesse: <a href='https://github.com/robertoalencar/oxefood-web' target='_blank'> https://github.com/robertoalencar/oxefood-web </a>
-                                    FormCliente.jsx
+
                                 </Grid.Column>
                             </Grid.Row>
                         </Grid>
@@ -32,3 +32,4 @@ class Home extends React.Component{
 }
 
 export default Home;
+

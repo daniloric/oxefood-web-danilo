@@ -1,36 +1,41 @@
+import axios from "axios";
 import React from "react";
-import InputMask from 'react-input-mask';
-import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
+import { Button, Container, Divider, Form, Icon, TextArea } from 'semantic-ui-react';
 
 class FormProduto extends React.Component{
 
 	state = {
+
+		codigo: null,
 		titulo: null,
-		descrição: null,
-		ValorUnitario: null,
-		foneCelular: null,
-		foneFixo: null
+		descricao: null,
+		valorUnitario: null,
+		tempoEntregaMinimo: null,
+		tempoEntregaMaximo: null
 	}
+ 
 
 	salvar = () => {
 
-	let clienteRequest = {
+		let produtoRequest = {
 
-		nome: this.state.nome,
-		cpf: this.state.cpf,
-		dataNascimento: this.state.dataNascimento,
-		foneCelular: this.state.foneCelular,
-		foneFixo: this.state.foneFixo
+			titulo: this.state.titulo,
+			codigo: this.state.codigo,
+			descricao: this.state.descricao,
+			valorUnitario: this.state.valorUnitario,
+			tempoEntregaMinimo: this.state.tempoEntregaMinimo,
+			tempoEntregaMaximo: this.state.tempoEntregaMaximo
+		}
+	
+		axios.post("http://localhost:8082/api/produto", produtoRequest)
+		.then((response) => {
+			console.log('Produto cadastrado com sucesso.')
+		})
+		.catch((error) => {
+			console.log('Erro ao incluir o um produto.')
+		})
 	}
 
-	axios.post("http://localhost:8082/api/cliente", clienteRequest)
-	.then((response) => {
-		console.log('Cliente cadastrado com sucesso.')
-	})
-	.catch((error) => {
-		console.log('Erro ao incluir o um cliente.')
-	})
-}
 
 
     render(){
@@ -49,65 +54,69 @@ class FormProduto extends React.Component{
 
 							<Form>
 
-								<Form.Group widths='equal'>
-
+								<Form.Group widths="equal">
 									<Form.Input
+
 										required
 										fluid
-										label='Titulo'
-                                        placeholder="Informe o titulo do produto"
+                                        width={12}
+										label='Título'
 										maxLength="100"
-                                        size= "100"
+                                        placeholder="Informe o título do produto"
+										value={this.state.titulo}
+										onChange={e => this.setState({titulo: e.target.value})}
 									/>
-
-									<Form.Input
-                                        required
-										fluid
-										label='Codigo de Produto'>
-										<InputMask 
-                                        placeholder="Informe o codigo do produto"
-										mask="999999999"/> 
-									</Form.Input>
-
-								</Form.Group>
-								
-                                <Form.TextArea
-										fluid
-										label='Descrição'
-                                        textarea placeholder="Informe a descrição do produto" 
-										maxLength="default"
-									/>
-
-								<Form.Group>
-
-                                <Form.Input
-                                        required
-										fluid
-										label='Valor Unitario'
-                                        width={6}>
-										<InputMask 
-										mask="999.99$"/> 
-									</Form.Input>
-
-
-									<Form.Input
-										fluid
-										label='Tempo de Entrega Minímo em Minutos'
-                                        width={6}>
-										<InputMask 
-                                        placeholder="31"
-										mask="99" /> 
-									</Form.Input>
 
                                     <Form.Input
+										required
 										fluid
-										label='Tempo de Entrega Maximo em Minutos'
-                                        width={6}>
-										<InputMask 
-                                        placeholder="41"
-										mask="99" /> 
-									</Form.Input>
-
+                                        width={5}
+										label='Código do Produto'
+										maxLength="100"
+                                        placeholder="Informe o código do produto"
+										value={this.state.codigo}
+										onChange={e => this.setState({codigo: e.target.value})}
+									/>
+                
+								</Form.Group>
+								
+								
+                                <Form.Field
+                                        id='descrição'
+                                        control={TextArea}
+                                        label='Descrição'
+                                        placeholder='Informe a descrição do produto'
+										value={this.state.descricao}
+										onChange={e => this.setState({descricao: e.target.value})}
+                                        />
+                                <Form.Group>
+                                    <Form.Input
+                                        required
+                                        fluid
+                                        label='Valor Unitário'
+                                        width={6}
+										value={this.state.valorUnitario}
+										onChange={e => this.setState({valorUnitario: e.target.value})}
+										/>
+                                     <Form.Input
+                                        
+                                        fluid
+                                        label='Tempo de Entrega Mínimo em Minutos'
+                                        width={6}
+                                        placeholder="30"
+										value={this.state.tempoEntregaMinimo}
+										onChange={e => this.setState({tempoEntregaMinimo: e.target.value})}
+										/>
+                                    <Form.Input
+                                        
+                                        fluid
+                                        label='Tempo de Entrega Máximo em Minutos'
+                                        width={6}
+                                        placeholder="40"
+										value={this.state.tempoEntregaMaximo}
+										onChange={e => this.setState({tempoEntregaMaximo: e.target.value})}
+										/>
+                           
 								</Form.Group>
 
 								<Form.Group widths='equal' style={{marginTop: '4%'}}  className='form--empresa-salvar'>
@@ -122,7 +131,7 @@ class FormProduto extends React.Component{
 										onClick={this.listar}
 										>
 										<Icon name='reply' />
-										Voltar
+										Listar
 									</Button>
 
 									<Container textAlign='right'>
