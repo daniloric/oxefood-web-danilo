@@ -1,7 +1,8 @@
 import axios from "axios";
 import React from "react";
 import InputMask from 'react-input-mask';
-import { Button, Container, Divider, Form, Icon, Select } from 'semantic-ui-react';
+import { Link } from "react-router-dom";
+import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 
 const paisesOptions = [
 	{ key: 'AC', text: 'AC', value: 'AC' },
@@ -32,7 +33,6 @@ const paisesOptions = [
 	{ key: 'TO', text: 'TO', value: 'TO' },
 	
   ]
-
 class FormEntregador extends React.Component{
 	state = {
 
@@ -44,23 +44,23 @@ class FormEntregador extends React.Component{
 		foneFixo: null,
 		qtdEntregasRealizadas: null,
 		valorFrete: null,
-		enderecoRua: null,
-		enderecoNumero: null,
-		enderecoBairro: null,
-		enderecoCidade: null,
-		enderecoCep: null,
-		enderecoUf: null,
-		enderecoComplemento: null,
-		ativo: null
+		enderecoRua:null,
+		enderecoNumero:null,
+        enderecoBairro:null,
+        enderecoCidade:null,
+        enderecoCep: null,
+        enderecoUf:null,
+        enderecoComplemento:null,
+        ativo:null
 	}
  
 	salvar = () => {
 
-		let entregadorRequest = {
+		let EntregadorRequest = {
 
-			nome: this.state.nome,
-			cpf: this.state.cpf,
-			rg: this.state.rg,	
+			nome:this.state.nome,
+		    cpf: this.state.cpf,
+		    rg: this.state.rg,
 			dataNascimento: this.state.dataNascimento,
 			foneCelular: this.state.foneCelular,
 			foneFixo: this.state.foneFixo,
@@ -76,20 +76,17 @@ class FormEntregador extends React.Component{
 			ativo: this.state.ativo
 		}
 	
-		axios.post("http://localhost:8082/api/entregador", entregadorRequest)
+		axios.post("http://localhost:8082/api/Entregador", EntregadorRequest)
 		.then((response) => {
 			console.log('Entregador cadastrado com sucesso.')
 		})
 		.catch((error) => {
-			console.log('Erro ao incluir um entregador.')
+			console.log('Erro ao incluir o um Entregador.')
 		})
 	}
 
-
-
-	handleChange = (e, { value }) => this.setState({ value })
+ 
     render(){
-		const { value } = this.state
         return(
             <div>
 
@@ -97,7 +94,7 @@ class FormEntregador extends React.Component{
 
                     <Container textAlign='justified' >
 
-                        <h2> <span style={{color: 'darkgray'}}> Entregador  &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro </h2>
+                        <h2> <span style={{color: 'darkgray'}}> Entregador &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro </h2>
 
                         <Divider />
 
@@ -105,183 +102,180 @@ class FormEntregador extends React.Component{
 
 							<Form>
 
-								<Form.Group>
+								<Form.Group widths='equal'>
 
 									<Form.Input
 										required
 										fluid
-                                        width={10}
 										label='Nome'
 										maxLength="100"
 										value={this.state.nome}
-										onChange={e => this.setState({nome: e.target.value})}
+			                            onChange={e => this.setState({nome: e.target.value})}
+
 									/>
 
 									<Form.Input
-                                        required
 										fluid
-                                        width={5}
 										label='CPF'>
 										<InputMask 
 										mask="999.999.999-99"
 										value={this.state.cpf}
-										onChange={e => this.setState({cpf: e.target.value})}
-										/> 
+			                            onChange={e => this.setState({cpf: e.target.value})}
+                                    /> 
 									</Form.Input>
 
                                     <Form.Input
 										fluid
-                                        width={5}
 										label='RG'>
 										<InputMask 
-										mask="9999999"
+										mask="9.999.999"
 										value={this.state.rg}
-										onChange={e => this.setState({rg: e.target.value})}
-										/> 
+		                             	onChange={e => this.setState({rg: e.target.value})}
+                                  /> 
 									</Form.Input>
 
 								</Form.Group>
 								
 								<Form.Group>
-
                                 <Form.Input
                                         fluid
                                         label='Data Nascimento'
-                                        width={3}
+                                        width={6}
                                     >
                                         <InputMask 
                                             mask="99/99/9999" 
                                             maskChar={null}
                                             placeholder="Ex: 20/03/1985"
 											value={this.state.dataNascimento}
-											onChange={e => this.setState({dataNascimento: e.target.value})}
+			                                onChange={e => this.setState({dataNascimento: e.target.value})}
                                         /> 
                                     </Form.Input>
-                                    
+
 									<Form.Input
-                                        required
 										fluid
 										label='Fone Celular'
-                                        width={4}>
+                                        width={6}>
 										<InputMask 
-										mask="(99) 9999.9999"
+										mask="(99) 9999.9999" 
 										value={this.state.foneCelular}
-										onChange={e => this.setState({foneCelular: e.target.value})}
-										 /> 
+			                            onChange={e => this.setState({foneCelular: e.target.value})}
+										/> 
 									</Form.Input>
 
 									<Form.Input
 										fluid
 										label='Fone Fixo'
-                                        width={4}>
+                                        width={6}>
 										<InputMask 
 										mask="(99) 9999.9999"
 										value={this.state.foneFixo}
-										onChange={e => this.setState({foneFixo: e.target.value})}
-										 /> 
+			                            onChange={e => this.setState({foneFixo: e.target.value})} /> 
 									</Form.Input>
 
                                     <Form.Input
 										fluid
-										label='QTD Entregas Realizadas'
-                                        width={3}
+										label='Quantidade de Entregas Realizadas'
+                                        width={6}
 										value={this.state.qtdEntregasRealizadas}
-										onChange={e => this.setState({qtdEntregasRealizadas: e.target.value})}
-										/>
+			                            onChange={e => this.setState({qtdEntregasRealizadas: e.target.value})}>
+									</Form.Input>
 
                                     <Form.Input
 										fluid
 										label='Valor por Frete'
                                         width={3}
-										value={this.state.valorFrete}
-										onChange={e => this.setState({valorFrete: e.target.value})}
-										/>
-
+											value={this.state.valorFrete}
+			                                onChange={e => this.setState({valorFrete: e.target.value})}>
+									</Form.Input>
 								</Form.Group>
 
                                 <Form.Group>
-                                    <Form.Input
-                                        fluid
-                                        label="Rua"
-                                        width={13}
+									<Form.Input
+										fluid
+										label='Rua'
+                                        width={14}
 										value={this.state.enderecoRua}
-										onChange={e => this.setState({enderecoRua: e.target.value})}
-                                        />
-                                    <Form.Input
-                                        fluid
-                                        label="Número"
+			                            onChange={e => this.setState({enderecoRua: e.target.value})}>
+									</Form.Input>
+
+									<Form.Input
+										fluid
+										label='Número'
                                         width={4}
 										value={this.state.enderecoNumero}
-										onChange={e => this.setState({enderecoNumero: e.target.value})}
-                                        />
-                                </Form.Group>
-
-                                <Form.Group widths="equal">
-                                    <Form.Input
-                                        fluid
-                                        label="Bairro"
-                                        width={7}
-										value={this.state.enderecoBairro}
-										onChange={e => this.setState({enderecoBairro: e.target.value})}
-                                        />
-                                    <Form.Input
-                                        fluid
-                                        label="Cidade"
-                                        width={7}
-										value={this.state.enderecoCidade}
-										onChange={e => this.setState({enderecoCidade: e.target.value})}
-                                        />
-                                    <Form.Input
-                                        fluid
-                                        label="CEP"
-                                        width={3}
-										value={this.state.enderecoCep}
-										onChange={e => this.setState({enderecoCep: e.target.value})}
-                                        />
-                                </Form.Group>
-								<Form.Group widths='equal'>								
-									<Form.Field
-										fluid
-										control={Select}
-										label='UF'
-										options={paisesOptions}
-										placeholder='Selecione'
-										value={this.state.enderecoUf}
-										onChange={(e,{value}) => {
-											this.setState({enderecoUf: value})
-										}}
-									/>
+			                            onChange={e => this.setState({enderecoNumero: e.target.value})}>
+									</Form.Input>
 								</Form.Group>
 
-								<Form.Input
-                                        fluid
-                                        label="Complemento"
+                                <Form.Group>
+									<Form.Input
+										fluid
+										label='Bairro'
+                                        width={10}
+									    value={this.state.enderecoBairro}
+			                            onChange={e => this.setState({enderecoBairro: e.target.value})}>
+									</Form.Input>
+
+                                    <Form.Input
+										fluid
+										label='Cidade'
+                                        width={10}
+										value={this.state.enderecoCidade}
+			                            onChange={e => this.setState({enderecoCidade: e.target.value})}>
+									</Form.Input>
+
+									<Form.Input
+										fluid
+										label='CEP'
+                                        width={10}
+											value={this.state.enderecoCep}
+			                                onChange={e => this.setState({enderecoCep: e.target.value})}>
+									</Form.Input>
+								</Form.Group>
+
+								<Form.Group widths='equal'>
+
+									<Form.Select
+									label='UF'
+									placeholder='Selecione' 
+									fluid 
+									options={paisesOptions }
+									value={this.state.enderecoUf}
+									onChange={(e, {value}) => {
+										this.setState({enderecoUf: value})
+									}}
+									/>
+
+									</Form.Group>	
+
+								<Form.Group widths='equal'>
+									<Form.Input
+										fluid
+										label='Complemento'
 										value={this.state.enderecoComplemento}
-										onChange={e => this.setState({enderecoComplemento: e.target.value})}
-                                        />
-										
-										<Form.Group inline>
-											<label>Ativo:</label>
-											<Form.Radio
-												
-												label='Sim'
-												value='sim'
-												checked={this.state.ativo}
-												onChange={e => this.setState({
-													ativo: true
-												})}
-											/>
-											<Form.Radio
-												
-												label='Não'
-												value='nao'
-												checked={!this.state.ativo}
-												onChange={e => this.setState({
-													ativo: false
-												})}
-											/>
-											
-										</Form.Group>
+			                            onChange={e => this.setState({enderecoComplemento: e.target.value})}>
+									</Form.Input>
+								</Form.Group>
+
+								<Form.Group inline>
+								<label>Ativo: </label>
+								<Form.Field
+									label='Sim'
+									control='input'
+									type='radio'
+									name='htmlRadios'
+									value={this.state.ativo}
+			                        onChange={e => this.setState({ativo: e.target.value})}
+								/>
+								<Form.Field
+									label='Não'
+									control='input'
+									type='radio'
+									name='htmlRadios'
+									value={this.state.ativo}
+			                        onChange={e => this.setState({ativo: e.target.value})}
+								/>
+								</Form.Group>
 
 								<Form.Group widths='equal' style={{marginTop: '4%'}}  className='form--empresa-salvar'>
 
@@ -295,7 +289,8 @@ class FormEntregador extends React.Component{
 										onClick={this.listar}
 										>
 										<Icon name='reply' />
-										Voltar
+										<Link to={'/list-Entregador'}>Voltar</Link>
+
 									</Button>
 
 									<Container textAlign='right'>

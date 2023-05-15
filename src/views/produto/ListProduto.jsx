@@ -1,124 +1,168 @@
-import axios from 'axios';
+import axios from "axios";
 import React from "react";
+import InputMask from 'react-input-mask';
 import { Link } from "react-router-dom";
-import { Button, Container, Divider, Icon, Table } from 'semantic-ui-react';
+import { Button, Container, Divider, Form, Icon, TextArea } from 'semantic-ui-react';
 
-class ListCliente extends React.Component{
+class FormProduto extends React.Component{
 
-   state = {
+	state = {
 
-       listaClientes: []
-      
-   }
+		titulo: null,
+		codigo: null,
+		descricao: null,
+		valorUnitario: null,
+		tempodeEntregaMinimo: null,
+		tempodeEntregaMaximo: null
+	}
+ 
+	salvar = () => {
 
-   componentDidMount = () => {
-      
-       this.carregarLista();
-      
-   }
-   carregarLista = () => {
+		let ProdutoRequest = {
 
-    axios.get("http://localhost:8082/api/cliente")
-    .then((response) => {
-       
-        this.setState({
-            listaClientes: response.data
-        })
-    })
+			titulo: this.state.titulo,
+			codigodoProduto: this.state.codigo,
+			descricao: this.state.descricao,
+			valorUnitario: this.state.valorUnitario,
+			tempodeEntregaMinimoemMinutos: this.state.tempodeEntregaMinimo,
+			tempodeEntregaMaximoemMinutos: this.state.tempodeEntregaMaximo
+		}
+	
+		axios.post("http://localhost:8082/api/Produto", ProdutoRequest)
+		.then((response) => {
+			console.log('Produto cadastrado com sucesso.')
+		})
+		.catch((error) => {
+			console.log('Erro ao incluir um Produto.')
+		})
+	}
 
-};
 
-formatarData = (dataParam) => {
+    render(){
+        return(
+            <div>
 
-     if (dataParam == null || dataParam == '') {
-         return ''
-     }
-     
-     let dia = dataParam.substr(8,2);
-     let mes = dataParam.substr(5,2);
-     let ano = dataParam.substr(0,4);
-     let dataFormatada = dia + '/' + mes + '/' + ano;
+                <div style={{marginTop: '3%'}}>
 
-     return dataFormatada
- };
+                    <Container textAlign='justified' >
 
- render(){
-    return(
-        <div>
+                        <h2> <span style={{color: 'darkgray'}}> Produto &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro </h2>
 
-            <div style={{marginTop: '3%'}}>
+                        <Divider />
 
-                <Container textAlign='justified' >
+						<div style={{marginTop: '4%'}}>
 
-                    <h2> Cliente </h2>
+							<Form>
 
-                    <Divider />
+								<Form.Group widths='equal'>
 
-                    <div style={{marginTop: '4%'}}>
+									<Form.Input
+										required
+										fluid
+										label='Titulo'
+										maxLength="100"
+										value={this.state.titulo}
+										onChange={e => this.setState({titulo: e.target.value})} 
+									/>
 
-                        <Button
-                            inverted
-                            circular
-                            icon
-                            labelPosition='left'
-                            color='orange'
-                            floated='right'
-                        >
-                            <Icon name='clipboard outline' />
-                            <Link to={'/form-cliente'}>Novo</Link>
-                        </Button>
-                        <br/><br/><br/>
-                      
-                      <Table color='orange' sortable celled>
+									<Form.Input
+                                        required
+										fluid
+										label='Código do Produto'>
+										<InputMask 
+										width={8}
+										value={this.state.codigo}
+										onChange={e => this.setState({codigo: e.target.value})}
+										>   
+                                        </InputMask>
 
-                          <Table.Header>
-                              <Table.Row>
-                                  <Table.HeaderCell>Nome</Table.HeaderCell>
-                                  <Table.HeaderCell>CPF</Table.HeaderCell>
-                                  <Table.HeaderCell>Data de Nascimento</Table.HeaderCell>
-                                  <Table.HeaderCell>Fone Celular</Table.HeaderCell>
-                                  <Table.HeaderCell>Fone Fixo</Table.HeaderCell>
-                                  <Table.HeaderCell textAlign='center' width={2}>Ações</Table.HeaderCell>
-                              </Table.Row>
-                          </Table.Header>
-                     
-                          <Table.Body>
+									</Form.Input>
 
-                              { this.state.listaClientes.map(cliente => (
+								</Form.Group>
+								
+                                   <Form.Field
+                                         id='form-textarea-control-Descricao'
+                                         control={TextArea}
+                                         label='Descrição'
+                                         placeholder='Descreva o Produto'
+										value={this.state.descricao}
+										onChange={e => this.setState({descricao: e.target.value})} 
+                                    />
+                    
+                                <Form.Group>
+									<Form.Input
+                                        required
+										fluid
+										label='Valor Unitário'
+                                        width={6}
+										value={this.state.valorUnitario}
+										onChange={e => this.setState({valorUnitario: e.target.value})} 
+										>
+									</Form.Input>
 
-                                  <Table.Row>
-                                      <Table.Cell>{cliente.nome}</Table.Cell>
-                                      <Table.Cell>{cliente.cpf}</Table.Cell>
-                                      <Table.Cell>{this.formatarData(cliente.dataNascimento)}</Table.Cell>
-                                      <Table.Cell>{cliente.foneCelular}</Table.Cell>
-                                      <Table.Cell>{cliente.foneFixo}</Table.Cell>
-                                      <Table.Cell textAlign='center'>
-                                         
-                                          <Button
-                                              inverted
-                                              circular
-                                              icon='edit'
-                                              color='blue'
-                                              itle='Clique aqui para editar os dados deste cliente' /> &nbsp;
-<Button
-                                                   inverted
-                                                   circular
-                                                   icon='trash'
-                                                   color='red'
-                                                   title='Clique aqui para remover este cliente' />
+                                    <Form.Input
+                                        fluid
+                                        label='Tempo de Entrega Mínimo em Minutos'
+                                        width={6}
+										value={this.state.tempodeEntregaMinimo}
+										onChange={e => this.setState({tempodeEntregaMinimo: e.target.value})} 
+										>
+                                    </Form.Input>
 
-                                           </Table.Cell>
-                                       </Table.Row>
-                                   ))}
+                                    <Form.Input
+                                        fluid
+                                        label='Tempo de Entrega Maximo em Minutos'
+                                        width={6}
+										value={this.state.tempodeEntregaMaximo}
+										onChange={e => this.setState({tempodeEntregaMaximo: e.target.value})}
+										>
+                                    </Form.Input>
 
-                               </Table.Body>
-                           </Table>
-                       </div>
-                   </Container>
-               </div>
-           </div>
-       )
-   }
+								</Form.Group>
+
+								<Form.Group widths='equal' style={{marginTop: '4%'}}  className='form--empresa-salvar'>
+
+									<Button
+										type="button"
+										inverted
+										circular
+										icon
+										labelPosition='left'
+										color='orange'
+										onClick={this.listar}
+										>
+										<Icon name='reply' />
+										<Link to={'/list-Produto'}> Voltar</Link>
+
+									</Button>
+
+									<Container textAlign='right'>
+										
+										<Button
+											inverted
+											circular
+											icon
+											labelPosition='left'
+											color='blue'
+											floated='right'
+											onClick={this.salvar}
+										
+										>
+											<Icon name='save' />
+											Salvar
+										</Button>
+										
+									</Container>
+
+								</Form.Group>
+
+							</Form>
+						</div>
+                    </Container>
+                </div>
+			</div>
+		)
+	}
 }
 
-export default ListCliente;
+export default FormProduto ;

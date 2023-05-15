@@ -8,7 +8,6 @@ function App() {
     <div className="App">
 
     <MenuSistema />
-
     <Rotas />
 
     <div style={{marginTop: '6%'}}>

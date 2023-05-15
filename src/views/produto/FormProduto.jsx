@@ -1,41 +1,41 @@
 import axios from "axios";
 import React from "react";
+import InputMask from 'react-input-mask';
+import { Link } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon, TextArea } from 'semantic-ui-react';
 
 class FormProduto extends React.Component{
 
 	state = {
 
-		codigo: null,
 		titulo: null,
+		codigo: null,
 		descricao: null,
 		valorUnitario: null,
-		tempoEntregaMinimo: null,
-		tempoEntregaMaximo: null
+		tempodeEntregaMinimo: null,
+		tempodeEntregaMaximo: null
 	}
  
-
 	salvar = () => {
 
-		let produtoRequest = {
+		let ProdutoRequest = {
 
 			titulo: this.state.titulo,
-			codigo: this.state.codigo,
+			codigodoProduto: this.state.codigo,
 			descricao: this.state.descricao,
 			valorUnitario: this.state.valorUnitario,
-			tempoEntregaMinimo: this.state.tempoEntregaMinimo,
-			tempoEntregaMaximo: this.state.tempoEntregaMaximo
+			tempodeEntregaMinimoemMinutos: this.state.tempodeEntregaMinimo,
+			tempodeEntregaMaximoemMinutos: this.state.tempodeEntregaMaximo
 		}
 	
-		axios.post("http://localhost:8082/api/produto", produtoRequest)
+		axios.post("http://localhost:8082/api/Produto", ProdutoRequest)
 		.then((response) => {
 			console.log('Produto cadastrado com sucesso.')
 		})
 		.catch((error) => {
-			console.log('Erro ao incluir o um produto.')
+			console.log('Erro ao incluir um Produto.')
 		})
 	}
-
 
 
     render(){
@@ -54,69 +54,70 @@ class FormProduto extends React.Component{
 
 							<Form>
 
-								<Form.Group widths="equal">
-									<Form.Input
+								<Form.Group widths='equal'>
 
+									<Form.Input
 										required
 										fluid
-                                        width={12}
-										label='Título'
+										label='Titulo'
 										maxLength="100"
-                                        placeholder="Informe o título do produto"
 										value={this.state.titulo}
-										onChange={e => this.setState({titulo: e.target.value})}
+										onChange={e => this.setState({titulo: e.target.value})} 
 									/>
 
-                                    <Form.Input
-										required
+									<Form.Input
+                                        required
 										fluid
-                                        width={5}
-										label='Código do Produto'
-										maxLength="100"
-                                        placeholder="Informe o código do produto"
+										label='Código do Produto'>
+										<InputMask 
+										width={8}
 										value={this.state.codigo}
 										onChange={e => this.setState({codigo: e.target.value})}
-									/>
-                
+										>   
+                                        </InputMask>
+
+									</Form.Input>
+
 								</Form.Group>
 								
-								
-                                <Form.Field
-                                        id='descrição'
-                                        control={TextArea}
-                                        label='Descrição'
-                                        placeholder='Informe a descrição do produto'
+                                   <Form.Field
+                                         id='form-textarea-control-Descricao'
+                                         control={TextArea}
+                                         label='Descrição'
+                                         placeholder='Descreva o Produto'
 										value={this.state.descricao}
-										onChange={e => this.setState({descricao: e.target.value})}
-                                        />
+										onChange={e => this.setState({descricao: e.target.value})} 
+                                    />
+                    
                                 <Form.Group>
-                                    <Form.Input
+									<Form.Input
                                         required
-                                        fluid
-                                        label='Valor Unitário'
+										fluid
+										label='Valor Unitário'
                                         width={6}
 										value={this.state.valorUnitario}
-										onChange={e => this.setState({valorUnitario: e.target.value})}
-										/>
-                                     <Form.Input
-                                        
+										onChange={e => this.setState({valorUnitario: e.target.value})} 
+										>
+									</Form.Input>
+
+                                    <Form.Input
                                         fluid
                                         label='Tempo de Entrega Mínimo em Minutos'
                                         width={6}
-                                        placeholder="30"
-										value={this.state.tempoEntregaMinimo}
-										onChange={e => this.setState({tempoEntregaMinimo: e.target.value})}
-										/>
+										value={this.state.tempodeEntregaMinimo}
+										onChange={e => this.setState({tempodeEntregaMinimo: e.target.value})} 
+										>
+                                    </Form.Input>
+
                                     <Form.Input
-                                        
                                         fluid
-                                        label='Tempo de Entrega Máximo em Minutos'
+                                        label='Tempo de Entrega Maximo em Minutos'
                                         width={6}
-                                        placeholder="40"
-										value={this.state.tempoEntregaMaximo}
-										onChange={e => this.setState({tempoEntregaMaximo: e.target.value})}
-										/>
-                           
+										value={this.state.tempodeEntregaMaximo}
+										onChange={e => this.setState({tempodeEntregaMaximo: e.target.value})}
+										>
+                                    </Form.Input>
+
 								</Form.Group>
 
 								<Form.Group widths='equal' style={{marginTop: '4%'}}  className='form--empresa-salvar'>
@@ -131,7 +132,8 @@ class FormProduto extends React.Component{
 										onClick={this.listar}
 										>
 										<Icon name='reply' />
-										Listar
+										<Link to={'/list-Produto'}> Voltar</Link>
+
 									</Button>
 
 									<Container textAlign='right'>
@@ -144,6 +146,7 @@ class FormProduto extends React.Component{
 											color='blue'
 											floated='right'
 											onClick={this.salvar}
+										
 										>
 											<Icon name='save' />
 											Salvar
@@ -162,4 +165,4 @@ class FormProduto extends React.Component{
 	}
 }
 
-export default FormProduto;
+export default FormProduto ;

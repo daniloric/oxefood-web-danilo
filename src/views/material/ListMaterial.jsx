@@ -3,11 +3,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Divider, Icon, Table } from 'semantic-ui-react';
 
-class ListEntregador extends React.Component{
+class ListMaterial extends React.Component{
 
    state = {
 
-       listaEntregador: []
+       listaMaterial: []
       
    }
 
@@ -18,11 +18,11 @@ class ListEntregador extends React.Component{
    }
    carregarLista = () => {
 
-    axios.get("http://localhost:8082/api/Entregador")
+    axios.get("http://localhost:8082/api/Material")
     .then((response) => {
        
         this.setState({
-            listaEntregador: response.data
+            listaMaterial: response.data
         })
     })
 

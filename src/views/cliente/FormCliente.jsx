@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 
 class FormCliente extends React.Component{
-
 	state = {
 
 		nome: null,
@@ -34,7 +33,6 @@ class FormCliente extends React.Component{
 			console.log('Erro ao incluir o um cliente.')
 		})
 	}
-
  
 
     render(){
@@ -61,32 +59,29 @@ class FormCliente extends React.Component{
 										label='Nome'
 										maxLength="100"
 										value={this.state.nome}
-										onChange={e => this.setState({nome: e.target.value})}
+			                            onChange={e => this.setState({nome: e.target.value})}
 									/>
 
 									<Form.Input
 										fluid
 										label='CPF'>
-										<InputMask 
+										<InputMask
 										mask="999.999.999-99"
 										value={this.state.cpf}
-										onChange={e => this.setState({cpf: e.target.value})}
+										onChange={e => this.setState({cpf: e.target.value})} 
 										/> 
 									</Form.Input>
-
 								</Form.Group>
 								
 								<Form.Group>
-
 									<Form.Input
 										fluid
 										label='Fone Celular'
                                         width={6}>
 										<InputMask 
-										mask="(99) 9999.9999"
+										mask="(99) 9999.9999" 
 										value={this.state.foneCelular}
-										onChange={e => this.setState({foneCelular: e.target.value})}
-										 /> 
+			                            onChange={e => this.setState({foneCelular: e.target.value})}/> 
 									</Form.Input>
 
 									<Form.Input
@@ -94,10 +89,9 @@ class FormCliente extends React.Component{
 										label='Fone Fixo'
                                         width={6}>
 										<InputMask 
-										mask="(99) 9999.9999"
+										mask="(99) 9999.9999" 
 										value={this.state.foneFixo}
-										onChange={e => this.setState({foneFixo: e.target.value})}
-										 /> 
+										onChange={e => this.setState({foneFixo: e.target.value})} /> 
 									</Form.Input>
 
                                     <Form.Input
@@ -106,11 +100,11 @@ class FormCliente extends React.Component{
                                         width={6}
                                     >
                                         <InputMask 
-                                            mask="99/99/9999" 
-                                            maskChar={null}
-                                            placeholder="Ex: 20/03/1985"
-											value={this.state.dataNascimento}
-											onChange={e => this.setState({dataNascimento: e.target.value})}
+                                        mask="99/99/9999" 
+                                        maskChar={null}
+                                        placeholder="Ex: 20/03/1985"
+										value={this.state.dataNascimento}
+										onChange={e => this.setState({dataNascimento: e.target.value})} 
                                         /> 
                                     </Form.Input>
 
