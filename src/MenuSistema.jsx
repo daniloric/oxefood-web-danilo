@@ -52,7 +52,15 @@ class MenuSistema extends React.Component{
                        active={this.state.activeItem === 'material'}
                        onClick={this.handleItemClick}
                        as={Link}
-                       to='/form-material'
+                       to='/list-material'
+                   />
+
+                    <Menu.Item
+                       name='cupom Desconto'
+                       active={this.state.activeItem === 'cupom Desconto'}
+                       onClick={this.handleItemClick}
+                       as={Link}
+                       to='/form-cupomDesconto'
                    />
 
                </Menu>

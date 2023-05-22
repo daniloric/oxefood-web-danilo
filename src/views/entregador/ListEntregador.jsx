@@ -64,7 +64,7 @@ formatarData = (dataParam) => {
                             floated='right'
                         >
                             <Icon name='clipboard outline' />
-                            <Link to={'/form-Entregador'}>Novo</Link>
+                            <Link to={'/form-entregador'}>Novo</Link>
                         </Button>
                         <br/><br/><br/>
                       

@@ -1,15 +1,15 @@
-import axios from "axios";
 import React from "react";
 import InputMask from 'react-input-mask';
 import { Link } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
+
 
 class FormMaterial extends React.Component{
 	state = {
 
 		titulo: null,
 		valor: null,
-		resposavel: null,
+		responsavel: null,
 		localizacao: null,
 		peso: null,
         dataAquisicao: null
@@ -20,21 +20,24 @@ class FormMaterial extends React.Component{
 		let materialRequest = {
 
 			titulo: this.state.titulo,
-			valor: this.state.valor,
-			resposavel: this.state.resposavel,
+			valor: parseFloat(this.state.valor),
+			responsavel: this.state.responsavel,
 			localizacao: this.state.localizacao,
-			peso: this.state.peso,
-            dataAquisicao: this.state.dataAquisicao
+            peso: parseFloat(this.state.peso),
+			dataAquisicao: this.state.dataAquisicao
+
 		}
+
+        console.log(materialRequest)
 	
-		axios.post("http://localhost:8082/api/material", materialRequest)
 		.then((response) => {
 			console.log('Material cadastrado com sucesso.')
 		})
 		.catch((error) => {
-			console.log('Erro ao incluir o um material.')
+			console.log('Erro ao incluir um material.')
 		})
 	}
+
  
 
     render(){
@@ -61,70 +64,59 @@ class FormMaterial extends React.Component{
 										label='Titulo'
 										maxLength="100"
 										value={this.state.titulo}
-			                            onChange={e => this.setState({titulo: e.target.value})}
-									/>
-
-									
-                                    <Form.Input
-										fluid
-										label='Valor'
-                                        width={3}
-											value={this.state.valor}
-			                                onChange={e => this.setState({valor: e.target.value})}>
-									</Form.Input>
-								</Form.Group>
-								
-								<Form.Group widths='equal'>
-
-									<Form.Input
-										required
-										fluid
-										label='Resposavel'
-										maxLength="100"
-										value={this.state.resposavel}
-										onChange={e => this.setState({resposavel: e.target.value})} 
+										onChange={e => this.setState({titulo: e.target.value})}
 									/>
 
 									<Form.Input
                                         required
 										fluid
-										label='Localizacao'>
-										<InputMask 
-										width={8}
-										value={this.state.localizacao}
-										onChange={e => this.setState({localizacao: e.target.value})}
-										>   
-                                        </InputMask>
+                                        width={3}
+										label='Valor'
+										value={this.state.valor}
+										onChange={e => this.setState({valor: e.target.value})}
+									/> 
 
-									</Form.Input>
+									<Form.Input
+										fluid
+										label='Responsável'
+                                        width={6}
+										value={this.state.responsavel}
+										onChange={e => this.setState({responsavel: e.target.value})} 
+									/>
 
 								</Form.Group>
+								
+								<Form.Group>
 
-                                <Form.Group widths='equal'>
-
-                                <Form.Input
-                                        fluid
-                                        label='Peso'
+									<Form.Input
+										fluid
+										label='Localização'
+                                        width={6}
+										value={this.state.localizacao}
+										onChange={e => this.setState({localizacao: e.target.value})}
+									/> 
+								
+                                    <Form.Input
+										fluid
+										label='Peso'
                                         width={6}
 										value={this.state.peso}
-										onChange={e => this.setState({peso: e.target.value})} 
-										>
-                                    </Form.Input>
+										onChange={e => this.setState({peso: e.target.value})}
+									/> 
 
-                                <Form.Input
+                                    <Form.Input
                                         fluid
                                         label='Data de Aquisição'
-                                        width={6}
-                                    >
+                                        width={6}>
                                         <InputMask 
-                                        mask="99/99/9999" 
-                                        maskChar={null}
-                                        placeholder="Ex: 20/03/1985"
-										value={this.state.dataAquisicao}
-										onChange={e => this.setState({dataAquisicao: e.target.value})} 
+                                            mask="99/99/9999" 
+                                            maskChar={null}
+                                            placeholder="Ex: 20/03/1985"
+											value={this.state.dataAquisicao}
+											onChange={e => this.setState({dataAquisicao: e.target.value})}
                                         /> 
                                     </Form.Input>
-                                    
+
 								</Form.Group>
 
 								<Form.Group widths='equal' style={{marginTop: '4%'}}  className='form--empresa-salvar'>
@@ -141,7 +133,6 @@ class FormMaterial extends React.Component{
 										<Icon name='reply' />
 										<Link to={'/list-material'}>Voltar</Link>
 									</Button>
-
 									<Container textAlign='right'>
 										
 										<Button
