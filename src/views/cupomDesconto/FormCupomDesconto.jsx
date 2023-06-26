@@ -3,18 +3,22 @@ import React from "react";
 import InputMask from 'react-input-mask';
 import { Link } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
+import { ENDERECO_SERVIDOR } from '../../util/Contantes';
+
 
 class FormCupomDesconto extends React.Component{
+
 	state = {
 
 		codigoDesconto: null,
 		percentualDesconto: null,
 		valorDesconto: null,
 		valorMinimoPedidoPermitido: null,
-		foneFquantidadeMaximaUsoixo: null,
-        inicioVigencia: null,
-        fimVigencia: null,
+		quantidadeMaximaUso: null,
+		inicioVigencia: null,
+        fimVigencia: null
 	}
+ 
 
 	salvar = () => {
 
@@ -24,20 +28,21 @@ class FormCupomDesconto extends React.Component{
 			percentualDesconto: this.state.percentualDesconto,
 			valorDesconto: this.state.valorDesconto,
 			valorMinimoPedidoPermitido: this.state.valorMinimoPedidoPermitido,
-			quantidadeMaximaUso: this.state.valorDesconto,
-            inicioVigencia: this.state.inicioVigencia,
-            fimVigencia: this.state.fimVigencia,
+			quantidadeMaximaUso: this.state.quantidadeMaximaUso,
+			inicioVigencia: this.state.inicioVigencia,
+            fimVigencia: this.state.fimVigencia
 		}
 	
-		axios.post("http://localhost:8082/api/cupomDescontoRequest", cupomDescontoRequest)
+		axios.post(ENDERECO_SERVIDOR + "/api/cupomDesconto", cupomDescontoRequest)
 		.then((response) => {
-			console.log('Cupom cadastrado com sucesso.')
+			console.log('Desconto cadastrado com sucesso.')
 		})
 		.catch((error) => {
-			console.log('Erro ao incluir o um Cupom.')
+			console.log('Erro ao incluir um desconto.')
 		})
 	}
- 
+
+
 
     render(){
         return(
@@ -55,89 +60,79 @@ class FormCupomDesconto extends React.Component{
 
 							<Form>
 
-								<Form.Group widths='equal'>
-
+								<Form.Group widths="equal">
 									<Form.Input
 										required
 										fluid
-										label='Código'
+                                        width={8}
+										label='Código do cupom'
 										maxLength="100"
 										value={this.state.codigoDesconto}
-			                            onChange={e => this.setState({codigoDesconto: e.target.value})}
+										onChange={e => this.setState({codigoDesconto: e.target.value})}
 									/>
-
                                     <Form.Input
 										fluid
-										label='Percentual Desconto'
-                                        width={6}
+                                        width={5}
+										label='% do desconto'
+										maxLength="100"
 										value={this.state.percentualDesconto}
-										onChange={e => this.setState({percentualDesconto: e.target.value})} 
-										>
-									</Form.Input>
-
+										onChange={e => this.setState({percentualDesconto: e.target.value})}
+									/>
                                     <Form.Input
-										fluid
-										label='Valor Desconto'
-                                        width={6}
+                                        fluid
+                                        label='Valor do cupom'
+                                        width={5}
 										value={this.state.valorDesconto}
-										onChange={e => this.setState({valorDesconto: e.target.value})} 
-										>
-									</Form.Input>
+										onChange={e => this.setState({valorDesconto: e.target.value})}
+									/>
 								</Form.Group>
 								
-								<Form.Group>
-                                <Form.Input
+                                <Form.Group>
+                                     <Form.Input
                                         fluid
-                                        label='Valor Minimo Permitido para o Pedido'
-                                        maxLength="100"
+                                        label='Valor Mínimo do Pedido'
+                                        width={9}
 										value={this.state.valorMinimoPedidoPermitido}
-										onChange={e => this.setState({valorMinimoPedidoPermitido: e.target.value})} 
-										>
-                                    </Form.Input>
-
+										onChange={e => this.setState({valorMinimoPedidoPermitido: e.target.value})}
+										/>
                                     <Form.Input
                                         fluid
-                                        label='Quantidade Máxima de Uso por Cliente'
-                                        maxLength="100"
+                                        label='Qtd máxima de Uso'
+                                        width={9}
 										value={this.state.quantidadeMaximaUso}
 										onChange={e => this.setState({quantidadeMaximaUso: e.target.value})}
-										>
-                                    </Form.Input>
-                                    
-
+										/>
+                           
 								</Form.Group>
 
-								<Form.Group>
-                                <Form.Input
-                                        fluid
-                                        label='Inicio da Vigencia'
-                                        width={6}
-                                    >
-                                        <InputMask 
-                                        mask="99/99/9999" 
-                                        maskChar={null}
-                                        placeholder="Ex: 20/03/1985"
-										value={this.state.inicioVigencia}
-										onChange={e => this.setState({inicioVigencia: e.target.value})} 
-                                        /> 
-                                    </Form.Input>
-
+                                <Form.Group>
                                     <Form.Input
                                         fluid
-                                        label='Fim da Vigencia'
-                                        width={6}
+                                        label='Data Incial'
+                                        width={4} 
+										>
+                                        <InputMask 
+                                            mask="99/99/9999" 
+                                            maskChar={null}
+                                            placeholder="Ex: 20/03/2023"
+                                            value={this.state.inicioVigencia}
+                                            onChange={e => this.setState({inicioVigencia: e.target.value})}
+                                        />
+                                    </Form.Input>
+                                    <Form.Input
+                                        fluid
+                                        label='Data Final'
+                                        width={4}
                                     >
                                         <InputMask 
-                                        mask="99/99/9999" 
-                                        maskChar={null}
-                                        placeholder="Ex: 20/03/1985"
-										value={this.state.fimVigencia}
-										onChange={e => this.setState({fimVigencia: e.target.value})} 
-                                        /> 
+                                            mask="99/99/9999" 
+                                            maskChar={null}
+                                            placeholder="Ex: 03/04/2023"
+                                            value={this.state.fimVigencia}
+                                            onChange={e => this.setState({fimVigencia: e.target.value})}
+										/>
                                     </Form.Input>
-
-								</Form.Group>
-
+                                </Form.Group>
 								<Form.Group widths='equal' style={{marginTop: '4%'}}  className='form--empresa-salvar'>
 
 									<Button
@@ -150,7 +145,8 @@ class FormCupomDesconto extends React.Component{
 										onClick={this.listar}
 										>
 										<Icon name='reply' />
-										<Link to={'/list-cliente'}>Voltar</Link>
+										<Link to={'/list-cupomDesconto'}>Listar</Link>
+										
 									</Button>
 
 									<Container textAlign='right'>

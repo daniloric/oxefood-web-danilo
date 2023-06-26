@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button, Container, Divider, Header, Icon, Modal, Table } from 'semantic-ui-react';
 import { ENDERECO_SERVIDOR } from '../../util/Contantes';
 
-class ListProduto extends React.Component {
+class ListCategoriaProduto extends React.Component {
 
     state = {
         openModal: false,
@@ -31,23 +31,23 @@ class ListProduto extends React.Component {
  
     remover = async () => {
 
-        await axios.delete(ENDERECO_SERVIDOR + '/api/produto/' + this.state.idRemover)
+        await axios.delete(ENDERECO_SERVIDOR + '/api/categoriaproduto/' + this.state.idRemover)
         .then((response) => {
    
             this.setState({ openModal: false })
-            console.log('Produto removido com sucesso.')
+            console.log('Categoria do produto removido com sucesso.')
    
-            axios.get(ENDERECO_SERVIDOR + "/api/produto")
+            axios.get(ENDERECO_SERVIDOR + "/api/categoriaproduto")
             .then((response) => {
            
                 this.setState({
-                    listaProdutos: response.data
+                    listaCategoriaProdutos: response.data
                 })
             })
         })
         .catch((error) => {
             this.setState({  openModal: false })
-            console.log('Erro ao remover um produto.')
+            console.log('Erro ao remover uma categoria de produto.')
         })
  };
  
@@ -60,29 +60,16 @@ class ListProduto extends React.Component {
 
     carregarLista = () => {
 
-        axios.get(ENDERECO_SERVIDOR + "/api/produto")
+        axios.get(ENDERECO_SERVIDOR + "/api/categoriaproduto")
             .then((response) => {
 
                 this.setState({
-                    listaProdutos: response.data
+                    listaCategoriaProdutos: response.data
                 })
             })
 
     };
 
-    formatarData = (dataParam) => {
-
-        if (dataParam == null || dataParam == '') {
-            return ''
-        }
-
-        let dia = dataParam.substr(8, 2);
-        let mes = dataParam.substr(5, 2);
-        let ano = dataParam.substr(0, 4);
-        let dataFormatada = dia + '/' + mes + '/' + ano;
-
-        return dataFormatada
-    };
     render() {
         return (
             <div>
@@ -91,7 +78,7 @@ class ListProduto extends React.Component {
 
                     <Container textAlign='justified' >
 
-                        <h2> Produto </h2>
+                        <h2> Categoria Produto </h2>
 
                         <Divider />
 
@@ -114,38 +101,26 @@ class ListProduto extends React.Component {
 
                                 <Table.Header>
                                     <Table.Row>
-                                        <Table.HeaderCell>Código</Table.HeaderCell>
-                                        <Table.HeaderCell>Categoria</Table.HeaderCell>
-                                        <Table.HeaderCell>Título</Table.HeaderCell>
                                         <Table.HeaderCell>Descrição</Table.HeaderCell>
-                                        <Table.HeaderCell>Valor Unitário</Table.HeaderCell>
-                                        <Table.HeaderCell>Tempo de Entrega Mínimo</Table.HeaderCell>
-                                        <Table.HeaderCell>Tempo de Entrega Máximo</Table.HeaderCell>
                                         <Table.HeaderCell textAlign='center' width={2}>Ações</Table.HeaderCell>
                                     </Table.Row>
                                 </Table.Header>
 
                                 <Table.Body>
 
-                                    {this.state.listaProdutos.map(produto => (
+                                    {this.state.listaCategoriaProdutos.map(categoriaProduto => (
 
                                         <Table.Row>
-                                            <Table.Cell>{produto.codigo}</Table.Cell>
-                                            <Table.Cell>{produto.categoria.descricao}</Table.Cell>
-                                            <Table.Cell>{produto.titulo}</Table.Cell>
-                                            <Table.Cell>{produto.descricao}</Table.Cell>
-                                            <Table.Cell>{produto.valorUnitario}</Table.Cell>
-                                            <Table.Cell>{produto.tempoEntregaMinimo}</Table.Cell>
-                                            <Table.Cell>{produto.tempoEntregaMaximo}</Table.Cell>
+                                            <Table.Cell>{categoriaProduto.descricao}</Table.Cell>
                                             <Table.Cell textAlign='center'>
 
                                                 <Button
                                                     inverted
                                                     circular
                                                     color='green'
-                                                    title='Clique aqui para editar os dados deste produto'
+                                                    title='Clique aqui para editar os dados desta categoria de produto'
                                                     icon>
-                                                    <Link to="/form-produto" state={{ id: produto.id }} style={{ color: 'green' }}> <Icon name='edit' /> </Link>
+                                                    <Link to="/form-produto" state={{ id: categoriaProduto.id }} style={{ color: 'green' }}> <Icon name='edit' /> </Link>
                                                 </Button> &nbsp;
 
                                                 <Button
@@ -153,8 +128,8 @@ class ListProduto extends React.Component {
                                                     circular
                                                     icon='trash'
                                                     color='red'
-                                                    title='Clique aqui para remover este produto'
-                                                    onClick={e => this.confirmaRemover(produto.id)} />
+                                                    title='Clique aqui para remover esta categoria de produto'
+                                                    onClick={e => this.confirmaRemover(categoriaProduto.id)} />
 
                                             </Table.Cell>
                                         </Table.Row>
@@ -192,6 +167,6 @@ class ListProduto extends React.Component {
     }
 }
 
-export default ListProduto;
+export default ListCategoriaProduto;
 
 

@@ -1,10 +1,12 @@
+import axios from "axios";
 import React from "react";
 import InputMask from 'react-input-mask';
 import { Link } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
-
+import { ENDERECO_SERVIDOR } from '../../util/Contantes';
 
 class FormMaterial extends React.Component{
+
 	state = {
 
 		titulo: null,
@@ -30,6 +32,7 @@ class FormMaterial extends React.Component{
 
         console.log(materialRequest)
 	
+		axios.post(ENDERECO_SERVIDOR+"/api/material", materialRequest)
 		.then((response) => {
 			console.log('Material cadastrado com sucesso.')
 		})

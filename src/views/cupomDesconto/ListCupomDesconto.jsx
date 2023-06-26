@@ -2,12 +2,13 @@ import axios from 'axios';
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Divider, Icon, Table } from 'semantic-ui-react';
+import { ENDERECO_SERVIDOR } from '../../util/Contantes';
 
-class ListCliente extends React.Component{
+class ListCupomDesconto extends React.Component{
 
    state = {
 
-       listaClientes: []
+       listaCupomDescontos: []
       
    }
 
@@ -18,11 +19,11 @@ class ListCliente extends React.Component{
    }
    carregarLista = () => {
 
-    axios.get("http://localhost:8082/api/cupomDesconto")
+    axios.get(ENDERECO_SERVIDOR+"/api/cupomDesconto")
     .then((response) => {
        
         this.setState({
-            listaClientes: response.data
+            listaCupomDescontos: response.data
         })
     })
 
@@ -41,7 +42,6 @@ formatarData = (dataParam) => {
 
      return dataFormatada
  };
-
  render(){
     return(
         <div>
@@ -50,7 +50,7 @@ formatarData = (dataParam) => {
 
                 <Container textAlign='justified' >
 
-                    <h2> Cliente </h2>
+                    <h2> Cupons de Descontos </h2>
 
                     <Divider />
 
@@ -73,39 +73,43 @@ formatarData = (dataParam) => {
 
                           <Table.Header>
                               <Table.Row>
-                                  <Table.HeaderCell>codigo de Desconto</Table.HeaderCell>
-                                  <Table.HeaderCell>percentual de Desconto</Table.HeaderCell>
-                                  <Table.HeaderCell>valor Desconto</Table.HeaderCell>
-                                  <Table.HeaderCell>valor Minimo Pedido Permitido</Table.HeaderCell>
-                                  <Table.HeaderCell>quantidade Maxima de Uso</Table.HeaderCell>
+                                  <Table.HeaderCell>Código do cupom</Table.HeaderCell>
+                                  <Table.HeaderCell>% do desconto</Table.HeaderCell>
+                                  <Table.HeaderCell>Valor do cupom'</Table.HeaderCell>
+                                  <Table.HeaderCell>Valor Mínimo do Pedido</Table.HeaderCell>
+                                  <Table.HeaderCell>Qtd máxima de Uso</Table.HeaderCell>
+                                  <Table.HeaderCell>Data Inicial</Table.HeaderCell>
+                                  <Table.HeaderCell>Data Final</Table.HeaderCell>
                                   <Table.HeaderCell textAlign='center' width={2}>Ações</Table.HeaderCell>
                               </Table.Row>
                           </Table.Header>
                      
                           <Table.Body>
 
-                              { this.state.listaClientes.map(cliente => (
+                              { this.state.listaCupomDescontos.map(cupomDesconto => (
 
                                   <Table.Row>
-                                      <Table.Cell>{cliente.codigoDesconto}</Table.Cell>
-                                      <Table.Cell>{cliente.percentualDesconto}</Table.Cell>
-                                      <Table.Cell>{this.formatarData(cupomDEsconto.valorDesconto)}</Table.Cell>
-                                      <Table.Cell>{cliente.foneCelular}</Table.Cell>
-                                      <Table.Cell>{cliente.foneFixo}</Table.Cell>
+                                      <Table.Cell>{cupomDesconto.codigoDesconto}</Table.Cell>
+                                      <Table.Cell>{cupomDesconto.percentualDesconto}</Table.Cell>
+                                      <Table.Cell>{cupomDesconto.valorDesconto}</Table.Cell>
+                                      <Table.Cell>{cupomDesconto.valorMinimoPedidoPermitido}</Table.Cell>
+                                      <Table.Cell>{cupomDesconto.quantidadeMaximaUso}</Table.Cell>
+                                      <Table.Cell>{cupomDesconto.inicioVigencia}</Table.Cell>
+                                      <Table.Cell>{cupomDesconto.fimVigencia}</Table.Cell>
                                       <Table.Cell textAlign='center'>
                                          
-                                          <Button
-                                              inverted
-                                              circular
-                                              icon='edit'
-                                              color='blue'
-                                              itle='Clique aqui para editar os dados deste cliente' /> &nbsp;
-<Button
-                                                   inverted
-                                                   circular
-                                                   icon='trash'
-                                                   color='red'
-                                                   title='Clique aqui para remover este cliente' />
+                                            <Button
+                                                inverted
+                                                circular
+                                                icon='edit'
+                                                color='blue'
+                                                title='Clique aqui para editar os dados deste cliente' /> &nbsp;
+                                            <Button
+                                                inverted
+                                                circular
+                                                icon='trash'
+                                                color='red'
+                                                title='Clique aqui para remover este cliente' />
 
                                            </Table.Cell>
                                        </Table.Row>
@@ -121,4 +125,6 @@ formatarData = (dataParam) => {
    }
 }
 
-export default ListCliente;
+export default ListCupomDesconto;
+
+
