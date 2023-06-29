@@ -39,7 +39,7 @@ export default function FormProduto() {
 	const [tempoEntregaMinimo, setTempoEntregaMinimo] = useState();
 	const [tempoEntregaMaximo, setTempoEntregaMaximo] = useState();
 	const [listaCategoria, setListaCategoria] = useState([]);
-	const [idCategoria, setIdCategoria] = useState();
+	const [idCategoria, setIdCategoria] = useState(); 
  
 
 
