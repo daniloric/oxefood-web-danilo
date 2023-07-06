@@ -1,6 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 import { ENDERECO_SERVIDOR } from '../../util/Contantes';
+
 export default function FormProduto() {
 
     const { state } = useLocation();
@@ -8,30 +11,25 @@ export default function FormProduto() {
 		if (state != null && state.id != null) {
 			axios.get(ENDERECO_SERVIDOR + "/api/categoriaproduto/" + state.id)
 				.then((response) => {
-					setIdProduto(response.data.id)
+					setIdCategoriaProduto(response.data.id)
 					setDescricao(response.data.descricao)
 				})
 		}
 
-		axios.get(ENDERECO_SERVIDOR + "/api/categoriaproduto")
-       .then((response) => {
-           const dropDownCategorias = response.data.map(c => ({ text: c.descricao, value: c.id }));
-           setListaCategoria(dropDownCategorias);
-       })
-
+		
 	}, [state])
-
+	const [idCategoriaProduto, setIdCategoriaProduto] = useState();
 	const [descricao, setDescricao] = useState();
 	
     function salvar() {
 
 		let categoriaProdutoRequest = {
-			idCategoria: idCategoria,
+		
 			descricao: descricao,
 		}
 
-		if (idProduto != null) { //Alteração:
-			axios.put(ENDERECO_SERVIDOR + "/api/categoriaproduto/" + idProduto, categoriaProdutoRequest)
+		if (idCategoriaProduto != null) { //Alteração:
+			axios.put(ENDERECO_SERVIDOR + "/api/categoriaproduto/" + idCategoriaProduto, categoriaProdutoRequest)
 				.then((response) => { console.log('Produto alterado com sucesso.') })
 				.catch((error) => { console.log('Erro ao alter um produto.') })
 		} else { //Cadastro:
@@ -46,10 +44,10 @@ export default function FormProduto() {
             <div style={{ marginTop: '3%' }}>
                 <Container textAlign='justified' >
                     
-					{idCategoria === undefined &&
+					{idCategoriaProduto === undefined &&
 						<h2> <span style={{ color: 'darkgray' }}> Categoria Produto &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro</h2>
 					}
-					{idCategoria != undefined &&
+					{idCategoriaProduto != undefined &&
 						<h2> <span style={{ color: 'darkgray' }}> Categoria Produto &nbsp;<Icon name='angle double right' size="small" /> </span> Alteração</h2>
 					}
                     <Divider />

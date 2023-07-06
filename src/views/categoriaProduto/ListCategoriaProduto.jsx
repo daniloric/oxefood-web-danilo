@@ -9,7 +9,7 @@ class ListCategoriaProduto extends React.Component {
     state = {
         openModal: false,
         idRemover: null,
-        listaProdutos: []
+        listaCategoriaProdutos: []
 
     }
 
@@ -93,7 +93,7 @@ class ListCategoriaProduto extends React.Component {
                                 floated='right'
                             >
                                 <Icon name='clipboard outline' />
-                                <Link to={'/form-produto'}>Novo</Link>
+                                <Link to={'/form-categoriaProduto'}>Novo</Link>
                             </Button>
                             <br /><br /><br />
 
@@ -120,7 +120,7 @@ class ListCategoriaProduto extends React.Component {
                                                     color='green'
                                                     title='Clique aqui para editar os dados desta categoria de produto'
                                                     icon>
-                                                    <Link to="/form-produto" state={{ id: categoriaProduto.id }} style={{ color: 'green' }}> <Icon name='edit' /> </Link>
+                                                    <Link to="/form-categoriaProduto" state={{ id: categoriaProduto.id }} style={{ color: 'green' }}> <Icon name='edit' /> </Link>
                                                 </Button> &nbsp;
 
                                                 <Button
