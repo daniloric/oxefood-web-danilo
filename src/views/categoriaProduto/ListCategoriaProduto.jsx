@@ -73,7 +73,7 @@ class ListCategoriaProduto extends React.Component {
     render() {
         return (
             <div>
-
+                 <MenuSistema />
                 <div style={{ marginTop: '3%' }}>
 
                     <Container textAlign='justified' >
