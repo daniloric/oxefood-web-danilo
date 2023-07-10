@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Divider, Header, Icon, Modal, Table } from 'semantic-ui-react';
 import { ENDERECO_SERVIDOR } from '../../util/Contantes';
+import { notifyError, notifySuccess } from '../../util/Util';
 
 class ListCliente extends React.Component {
 
@@ -36,9 +37,9 @@ class ListCliente extends React.Component {
             return ''
         }
 
-        let dia = dataParam.substr(8, 2);
-        let mes = dataParam.substr(5, 2);
-        let ano = dataParam.substr(0, 4);
+        let dia = dataParam[2];
+        let mes = dataParam[1];
+        let ano = dataParam[0];
         let dataFormatada = dia + '/' + mes + '/' + ano;
 
         return dataFormatada
@@ -66,7 +67,7 @@ class ListCliente extends React.Component {
             .then((response) => {
 
                 this.setState({ openModal: false })
-                console.log('Cliente removido com sucesso.')
+                notifySuccess('Cliente removido com sucesso.')
 
                 axios.get(ENDERECO_SERVIDOR + "/api/cliente")
                     .then((response) => {
@@ -78,7 +79,7 @@ class ListCliente extends React.Component {
             })
             .catch((error) => {
                 this.setState({ openModal: false })
-                console.log('Erro ao remover um cliente.')
+                notifyError(error.response.data.errors[0].defaultMessage)
             })
     };
 
@@ -87,7 +88,7 @@ class ListCliente extends React.Component {
     render() {
         return (
             <div>
-            <MenuSistema />
+
                 <div style={{ marginTop: '3%' }}>
 
                     <Container textAlign='justified' >

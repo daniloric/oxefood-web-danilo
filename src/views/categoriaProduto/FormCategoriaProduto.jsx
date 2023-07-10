@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 import { ENDERECO_SERVIDOR } from '../../util/Contantes';
+import { mensagemErro, notifyError, notifySuccess } from '../../util/Util';
 
 export default function FormProduto() {
 
@@ -30,12 +31,20 @@ export default function FormProduto() {
 
 		if (idCategoriaProduto != null) { //Alteração:
 			axios.put(ENDERECO_SERVIDOR + "/api/categoriaproduto/" + idCategoriaProduto, categoriaProdutoRequest)
-				.then((response) => { console.log('Produto alterado com sucesso.') })
-				.catch((error) => { console.log('Erro ao alter um produto.') })
+				.then((response) => {notifySuccess('Categoria Produto alterada com sucesso.') })
+				.catch((error) => {if (error.response) {
+					notifyError(error.response.data.errors[0].defaultMessage)
+					} else {
+					notifyError(mensagemErro)
+					} })
 		} else { //Cadastro:
 			axios.post(ENDERECO_SERVIDOR + "/api/categoriaproduto", categoriaProdutoRequest)
-				.then((response) => { console.log('Produto cadastrado com sucesso.') })
-				.catch((error) => { console.log('Erro ao incluir o produto.') })
+				.then((response) => { notifySuccess('Categoria Produto cadastrada com sucesso.') })
+				.catch((error) => { if (error.response) {
+					notifyError(error.response.data.errors[0].defaultMessage)
+					} else {
+					notifyError(mensagemErro)
+					} })
 		}
 	}
 

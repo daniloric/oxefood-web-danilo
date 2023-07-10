@@ -4,6 +4,7 @@ import InputMask from 'react-input-mask';
 import { Link, useLocation } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon, Select } from 'semantic-ui-react';
 import { ENDERECO_SERVIDOR } from '../../util/Contantes';
+import { mensagemErro, notifyError, notifySuccess } from '../../util/Util';
 
 const paisesOptions = [
 	{ key: 'AC', text: 'AC', value: 'AC' },
@@ -107,12 +108,20 @@ export default function FormEntregador() {
 
 		if (idEntregador != null) { //Alteração:
 			axios.put(ENDERECO_SERVIDOR + "/api/entregador/" + idEntregador, entregadorRequest)
-				.then((response) => { console.log('Entregador alterado com sucesso.') })
-				.catch((error) => { console.log('Erro ao alterar um entregador.') })
+				.then((response) => {notifySuccess('Entregador alterado com sucesso.') })
+				.catch((error) => { if (error.response) {
+					notifyError(error.response.data.errors[0].defaultMessage)
+					} else {
+					notifyError(mensagemErro)
+					} })
 		} else { //Cadastro:
 			axios.post(ENDERECO_SERVIDOR + "/api/entregador", entregadorRequest)
-				.then((response) => { console.log('Entregador cadastrado com sucesso.') })
-				.catch((error) => { console.log('Erro ao incluir um entregador.') })
+				.then((response) => { notifySuccess('Entregador alterado com sucesso.') })
+				.catch((error) => { if (error.response) {
+					notifyError(error.response.data.errors[0].defaultMessage)
+					} else {
+					notifyError(mensagemErro)
+					} })
 		}
 	}
 

@@ -4,6 +4,8 @@ import InputMask from 'react-input-mask';
 import { Link, useLocation } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 import { ENDERECO_SERVIDOR } from '../../util/Contantes';
+import { mensagemErro, notifyError, notifySuccess } from '../../util/Util';
+
 
 export default function FormCliente() {
 
@@ -42,12 +44,23 @@ export default function FormCliente() {
 
 		if (idCliente != null) { //Alteração:
 			axios.put(ENDERECO_SERVIDOR + "/api/cliente/" + idCliente, clienteRequest)
-				.then((response) => { console.log('Cliente alterado com sucesso.') })
-				.catch((error) => { console.log('Erro ao alterar um cliente.') })
+				.then((response) => { notifySuccess('Cliente alterado com sucesso.')})
+				.catch((error) => { if (error.response) {
+					notifyError(error.response.data.errors[0].defaultMessage)
+					} else {
+					notifyError(mensagemErro)
+					} 
+		})
 		} else { //Cadastro:
 			axios.post(ENDERECO_SERVIDOR + "/api/cliente", clienteRequest)
-				.then((response) => { console.log('Cliente cadastrado com sucesso.') })
-				.catch((error) => { console.log('Erro ao incluir o cliente.') })
+				.then((response) => { notifySuccess('Cliente cadastrado com sucesso.') 
+				})
+				.catch((error) => { if (error.response) {
+					notifyError(error.response.data.errors[0].defaultMessage)
+					} else {
+					notifyError(mensagemErro)
+					}  
+				})
 		}
 	}
 
@@ -57,9 +70,9 @@ export default function FormCliente() {
             return ''
         }
         
-        let dia = dataParam.substr(8,2);
-        let mes = dataParam.substr(5,2);
-        let ano = dataParam.substr(0,4);
+        let dia = dataParam[2];
+        let mes = dataParam[1];
+        let ano = dataParam[0];
         let dataFormatada = dia + '/' + mes + '/' + ano;
 
         return dataFormatada
@@ -70,7 +83,7 @@ export default function FormCliente() {
 
 	return (
 		<div>
-			 <MenuSistema />
+
 			<div style={{ marginTop: '3%' }}>
 
 				<Container textAlign='justified' >

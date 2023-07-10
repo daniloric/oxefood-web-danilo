@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Divider, Header, Icon, Modal, Table } from 'semantic-ui-react';
 import { ENDERECO_SERVIDOR } from '../../util/Contantes';
+import { notifyError, notifySuccess } from '../../util/Util';
 
 class ListCategoriaProduto extends React.Component {
 
@@ -35,7 +36,7 @@ class ListCategoriaProduto extends React.Component {
         .then((response) => {
    
             this.setState({ openModal: false })
-            console.log('Categoria do produto removido com sucesso.')
+            notifySuccess('Categoria Produto removida com sucesso.')
    
             axios.get(ENDERECO_SERVIDOR + "/api/categoriaproduto")
             .then((response) => {
@@ -47,7 +48,7 @@ class ListCategoriaProduto extends React.Component {
         })
         .catch((error) => {
             this.setState({  openModal: false })
-            console.log('Erro ao remover uma categoria de produto.')
+            notifyError(error.response.data.errors[0].defaultMessage)
         })
  };
  
@@ -73,7 +74,7 @@ class ListCategoriaProduto extends React.Component {
     render() {
         return (
             <div>
-                 <MenuSistema />
+
                 <div style={{ marginTop: '3%' }}>
 
                     <Container textAlign='justified' >

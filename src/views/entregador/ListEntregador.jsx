@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Divider, Header, Icon, Modal, Table } from 'semantic-ui-react';
 import { ENDERECO_SERVIDOR } from '../../util/Contantes';
+import { notifyError, notifySuccess } from '../../util/Util';
 
 class ListEntregador extends React.Component {
 
@@ -35,7 +36,7 @@ class ListEntregador extends React.Component {
             .then((response) => {
 
                 this.setState({ openModal: false })
-                console.log('Entregador removido com sucesso.')
+                notifySuccess('Entregador removido com sucesso.')
 
                 axios.get(ENDERECO_SERVIDOR + "/api/entregador")
                     .then((response) => {
@@ -47,7 +48,7 @@ class ListEntregador extends React.Component {
             })
             .catch((error) => {
                 this.setState({ openModal: false })
-                console.log('Erro ao remover um entregador.')
+                notifyError(error.response.data.errors[0].defaultMessage)
             })
     };
 

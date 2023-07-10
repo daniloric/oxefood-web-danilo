@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Divider, Header, Icon, Modal, Table } from 'semantic-ui-react';
 import { ENDERECO_SERVIDOR } from '../../util/Contantes';
+import { notifyError, notifySuccess } from '../../util/Util';
 
 class ListProduto extends React.Component {
 
@@ -35,7 +36,7 @@ class ListProduto extends React.Component {
         .then((response) => {
    
             this.setState({ openModal: false })
-            console.log('Produto removido com sucesso.')
+            notifySuccess('Produto removido com sucesso.')
    
             axios.get(ENDERECO_SERVIDOR + "/api/produto")
             .then((response) => {
@@ -47,7 +48,7 @@ class ListProduto extends React.Component {
         })
         .catch((error) => {
             this.setState({  openModal: false })
-            console.log('Erro ao remover um produto.')
+            notifyError(error.response.data.errors[0].defaultMessage)
         })
  };
  
